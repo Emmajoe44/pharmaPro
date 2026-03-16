@@ -1,6 +1,6 @@
 const { Pool } = require('pg');
 
-const pool = new Pool({
+const databaseConnectionPool = new Pool({
     host: 'localhost',
     port: 5432,
     user: 'your_username', // replace with your database username
@@ -8,4 +8,4 @@ const pool = new Pool({
     database: 'your_database', // replace with your database name
 });
 
-module.exports = { pool };
+module.exports = { databaseConnectionPool };

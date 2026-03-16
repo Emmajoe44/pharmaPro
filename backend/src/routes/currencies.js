@@ -9,9 +9,9 @@ router.get('/', (req, res) => {
 
 // Endpoint to get currency by code
 router.get('/:code', (req, res) => {
-    const code = req.params.code;
+    const currencyCode = req.params.code;
     // Logic to retrieve currency by code
-    res.json({ message: `Retrieved currency data for ${code}` });
+    res.json({ message: `Retrieved currency data for ${currencyCode}` });
 });
 
 // Endpoint to create a new currency
@@ -23,17 +23,17 @@ router.post('/', (req, res) => {
 
 // Endpoint to update a currency
 router.put('/:code', (req, res) => {
-    const code = req.params.code;
-    const updatedData = req.body;
+    const currencyCode = req.params.code;
+    const updatedCurrencyData = req.body;
     // Logic to update currency
-    res.json({ message: `Currency ${code} updated`, data: updatedData });
+    res.json({ message: `Currency ${currencyCode} updated`, data: updatedCurrencyData });
 });
 
 // Endpoint to delete a currency
 router.delete('/:code', (req, res) => {
-    const code = req.params.code;
+    const currencyCode = req.params.code;
     // Logic to delete currency
-    res.json({ message: `Currency ${code} deleted` });
+    res.json({ message: `Currency ${currencyCode} deleted` });
 });
 
 module.exports = router;

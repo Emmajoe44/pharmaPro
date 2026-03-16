@@ -1,17 +1,17 @@
 'use strict';
 
 const jwt = require('jsonwebtoken');
-const secretKey = process.env.JWT_SECRET; // Ensure you have a secret key in your environment variables
+const jwtSecretKey = process.env.JWT_SECRET; // Ensure you have a secret key in your environment variables
 
 const authenticateJWT = (req, res, next) => {
-    const token = req.header('Authorization')?.split(' ')[1]; // Bearer token
+    const authorizationToken = req.header('Authorization')?.split(' ')[1]; // Bearer token
     
-    if (token) {
-        jwt.verify(token, secretKey, (err, user) => {
-            if (err) {
+    if (authorizationToken) {
+        jwt.verify(authorizationToken, jwtSecretKey, (jwtVerificationError, authenticatedUser) => {
+            if (jwtVerificationError) {
                 return res.sendStatus(403); // Forbidden
             }
-            req.user = user;
+            req.user = authenticatedUser;
             next();
         });
     } else {
