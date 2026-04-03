@@ -252,13 +252,14 @@ router.get('/results/:id', async (req, res) => {
 
 // POST create a lab result and mark the order as completed
 router.post('/results', async (req, res) => {
+    const { order_id, technician_name, result_value, result_notes, status } = req.body;
+    if (!order_id || !result_value) {
+        return res.status(400).json({ error: 'order_id and result_value are required' });
+    }
     const client = await pool.connect();
     try {
-        const { order_id, technician_name, result_value, result_notes, status } = req.body;
-        if (!order_id || !result_value) {
-            return res.status(400).json({ error: 'order_id and result_value are required' });
-        }
         await client.query('BEGIN');
+        await client.query(`SET LOCAL lock_timeout = '5s'`);
 
         // Lock the order row to prevent race conditions and validate its state
         const orderCheck = await client.query(
