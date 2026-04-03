@@ -7,7 +7,7 @@ const authenticateJWT = (req, res, next) => {
     const token = req.header('Authorization')?.split(' ')[1]; // Bearer token
     
     if (token) {
-        jwt.verify(token, secretKey, (err, user) => {
+        jwt.verify(token, secretKey, { algorithms: ['HS256'] }, (err, user) => {
             if (err) {
                 return res.sendStatus(403); // Forbidden
             }
